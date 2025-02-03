@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: idziemy-app
+  labels:
+    app: idziemy-app
+spec:
+  replicas: 3 # Number of replicas (pods) to run
+  selector:
+    matchLabels:
+      app: idziemy-app
+  template:
+    metadata:
+      labels:
+        app: idziemy-app
+    spec:
+      containers:
+      - name: idziemy-app
+        image: your-dockerhub-username/idziemy-app:1.0.0 # Replace with your image name
+        ports:
+        - containerPort: 8080
+        env:
+        - name: APP_ENV
+          value: "prod" # Set the environment variable (can be overridden in the pod spec)
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+      restartPolicy: Always
